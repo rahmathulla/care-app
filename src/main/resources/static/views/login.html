@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login Page</title>
+</head>
+<body>
+	<div ng-controller="loginController">
+		<form name="loginForm" ng-submit="login()">
+			<div class="form-group"
+				ng-class="{'has-error' : loginForm.email.$invalid && loginForm.email.$dirty}">
+				<label for="email">Email:</label> <input id="email" name="email"
+					type="email" class="form-control" ng-blur="visitedEmail=true"
+					required ng-minlength="5" ng-maxlength="100" ng-model="email">
+				<span
+					ng-class="{'glyphicon glyphicon-ok' : visitedEmail && loginForm.email.$valid}"></span>
+				<p class="help-block"
+					ng-show="loginForm.email.$invalid && loginForm.email.$dirty">E-mail
+					is Invalid</p>
+				<p class="help-block" ng-show="loginForm.email.$error.minlength">E-mail
+					must be at least 5 characters long.</p>
+				<p class="help-block" ng-show="loginForm.email.$error.maxlength">E-mail
+					cannot be longer than 100 characters.</p>
+			</div>
+
+
+			<div class="form-group"
+				ng-class="{'has-error' : loginForm.pwd.$invalid && loginForm.pwd.$dirty}">
+				<label for="pwd">Password:</label> <input id="pwd" name="pwd"
+					type="password" class="form-control" required ng-minlength="6"
+					ng-maxlength="100" ng-model="password"> <span
+					ng-class="{'glyphicon glyphicon-ok' : loginForm.pwd.$valid && loginForm.pwd.$dirty}"></span>
+				<p class="help-block" ng-show="loginForm.pwd.$error.minlength">Password
+					must be at least 6 characters long.</p>
+				<p class="help-block" ng-show="loginForm.pwd.$error.maxlength">Password
+					cannot be longer than 100 characters.</p>
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+
+
+<!-- 			<div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div> -->
+		</form>
+	</div>
+</body>
+</html>

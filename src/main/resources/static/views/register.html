@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration Page</title>
+</head>
+<body>
+<form name="registerForm">
+<div ng-show="userAlreadyExist">
+	<div class="modal-body">
+	<div class="alert alert-warning">
+		<strong>User with same Email Already Registered With the system. 
+		Please try with different email id</strong>
+	</div>
+	</div>
+	</div>
+<div ng-show="!registered">
+	<div class="modal-body">
+		
+			<div class="form-group" ng-class="{'has-error' : registerForm.firstName.$invalid && registerForm.firstName.$dirty}">
+                <label for="firstName">First Name:</label>
+                <!-- Display a check when the field is valid and was modified -->
+                <span ng-class="{'glyphicon glyphicon-ok' : registerForm.firstName.$valid && registerForm.firstName.$dirty}"></span>
+
+                <input id="firstName" name="firstName" type="text" class="form-control"
+                       ng-model="userDto.firstName"
+                       required ng-minlength="2" ng-maxlength="50"/>
+
+                <!-- Validation messages to be displayed on required, minlength and maxlength -->
+                <p class="help-block" ng-show="registerForm.firstName.$error.required">First Name is mandatory</p>
+                <p class="help-block" ng-show="registerForm.firstName.$error.minlength">First Name must be at least 2 characters long.</p>
+                <p class="help-block" ng-show="registerForm.firstName.$error.maxlength">First Name cannot be longer than 50 characters.</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : registerForm.lastName.$invalid && registerForm.lastName.$dirty}">
+                <label for="lastName">Last Name:</label>
+                <!-- Display a check when the field is valid and was modified -->
+                <span ng-class="{'glyphicon glyphicon-ok' : registerForm.lastName.$valid && registerForm.lastName.$dirty}"></span>
+
+                <input id="lastName" name="lastName" type="text" class="form-control"
+                       ng-model="userDto.lastName"
+                       required ng-minlength="2" ng-maxlength="50"/>
+
+                <!-- Validation messages to be displayed on required, minlength and maxlength -->
+                <p class="help-block" ng-show="registerForm.lastName.$error.required">Last Name is mandatory</p>
+                <p class="help-block" ng-show="registerForm.lastName.$error.minlength">Last Name must be at least 2 characters long.</p>
+                <p class="help-block" ng-show="registerForm.lastName.$error.maxlength">Last Name cannot be longer than 50 characters.</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : registerForm.phone.$invalid && registerForm.phone.$dirty}">
+                <label for="phone">Phone:</label>
+                <!-- Display a check when the field is valid and was modified -->
+                <span ng-class="{'glyphicon glyphicon-ok' : registerForm.phone.$valid && registerForm.phone.$dirty}"></span>
+
+                <input id="phone" name="phone" type="text" class="form-control"
+                       ng-model="userDto.phone" ng-pattern="ph_numbr"
+                       required ng-minlength="10"/>
+
+                <!-- Validation messages to be displayed on required, minlength and maxlength -->
+                <p class="help-block" ng-show="registerForm.phone.$error.required">Phone number is mandatory</p>
+                <p class="help-block" ng-show="registerForm.phone.$error.minlength">Phone number must be at least 10 characters long.</p>
+              
+            </div>
+			<div class="form-group"
+				ng-class="{'has-error' : registerForm.email.$invalid && registerForm.email.$dirty}">
+				<label for="email">Email:</label> 
+				<input id="email" name="email"
+					type="email" class="form-control" ng-blur="visitedEmail=true"
+					required ng-minlength="5" ng-maxlength="100" ng-model="userDto.email" ng-pattern="eml_add">
+				<span ng-class="{'glyphicon glyphicon-ok' : visitedEmail && registerForm.email.$valid}"></span>
+				<p class="help-block" ng-show="registerForm.email.$invalid && registerForm.email.$dirty">E-mail is Invalid</p>
+				<p class="help-block" ng-show="registerForm.email.$error.minlength">E-mail must be at least 5 characters long.</p>
+				<p class="help-block" ng-show="registerForm.email.$error.maxlength">E-mail cannot be longer than 100 characters.</p>
+			</div>
+
+
+			<div class="form-group"
+				ng-class="{'has-error' : registerForm.pswd.$invalid && registerForm.pswd.$dirty}">
+				<label for="pswd">Password:</label> 
+				<input id="pswd" name="pswd"
+					type="password" class="form-control" required ng-minlength="6"
+					ng-maxlength="100" ng-model="userDto.password"> 
+				<span ng-class="{'glyphicon glyphicon-ok' : registerForm.pswd.$valid && registerForm.pswd.$dirty}"></span>
+				<p class="help-block" ng-show="registerForm.pswd.$error.minlength">Password must be at least 6 characters long.</p>
+				<p class="help-block" ng-show="registerForm.pswd.$error.maxlength">Password cannot be longer than 100 characters.</p>
+			</div>
+			
+			<div class="form-group"
+				ng-class="{'has-error' : registerForm.confPswd.$invalid && registerForm.confPswd.$dirty}">
+				<label for="confPswd">Confirm Password:</label> 
+				<input id="confPswd" name="confPswd"
+					type="password" class="form-control" required ng-minlength="6"
+					ng-maxlength="100" ng-model="confPassword" compare-to="userDto.password"> 
+				<span ng-class="{'glyphicon glyphicon-ok' : registerForm.confPswd.$valid && registerForm.confPswd.$dirty}"></span>
+				<p class="help-block" ng-show="registerForm.confPswd.$error.minlength">Password must be at least 6 characters long.</p>
+				<p class="help-block" ng-show="registerForm.confPswd.$error.maxlength">Password cannot be longer than 100 characters.</p>
+			</div>
+
+			<div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
+		
+		</div>
+
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="submit" ng-click= "registerForm.$valid && registerUser()">Register</button>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+<!-- 		<button type="button" class="close" data-dismiss="modal">&times;</button> -->
+	</div>
+	</div>
+	<div ng-show="registered">
+	<div class="modal-body">
+	<div class="alert alert-success">
+		<strong>User Successfully Registered</strong>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button" ng-click= "close()">Close</button>
+	</div></div>
+	</div>
+	
+	
+	</form>
+</body>
+</html>
