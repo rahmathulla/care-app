@@ -1,4 +1,4 @@
-**This is a simple login/register application using Angular JS and Spring Boot**
+**A sample login/register application using Angular JS and Spring Boot**
 
 **Technologies Used**: 
 1. Angular Js
